@@ -18,13 +18,18 @@ else:
 
 #Readin the Json File
 json_loc = st.text_input('Enter Json  File Location')
-if len(json_loc)>0:
-    with open(json_loc,'r') as f:
-        data = json.loads(f.read())
-        df_nested_list = pd.json_normalize(data, record_path =['objects'])
-        st.write(df_nested_list)
-else:
-    st.write("Enter the location for the Json Path")
+try: 
+    if len(json_loc)>0:
+        with open(json_loc,'r') as f:
+            data = json.loads(f.read())
+            df_nested_list = pd.json_normalize(data, record_path =['objects'])
+            st.write(df_nested_list)
+    else:
+        st.write("Enter the location for the Json Path")
+
+except: 
+    df_nested_list = pd.read_json(json_loc)
+    st.write(df_nested_list)
 
 #Reading the Excel File
 excel_loc = st.text_input('Enter Excel File Location')
